@@ -9,6 +9,7 @@ float sensor_min[5] = { 1023,1023, 1023, 1023, 1023};
 float sensor_normal[5] = {0,0,0,0,0};
 int sensor_digital[5] = {0,0,0,0,0};
 int pesos[5] = {-2,-1,0,1,2};
+bool gap = false;
 float kp = 130;
 float kd = 2;
 int velocidade_base = 170;
@@ -57,7 +58,6 @@ void normalizacao() {
 
 float posicao_linha() {
   float posicao = 0;
-  static float lastposicao = 0;
   float total = 0;
   float soma = 0;
   for (int i = 0; i<5; i++) {
@@ -66,9 +66,8 @@ float posicao_linha() {
   }  
   if (total > 10) {
       posicao = soma/total;
-      lastposicao = posicao;
   } else {
-    posicao = lastposicao;
+    gap = true;
 }
 return posicao;
 }
@@ -144,9 +143,13 @@ void controle(){
           return;
         }
       }
-  } else {
-      float pos = posicao_linha();
+  } else if(gap) {
+      motor(0);
+      posicao_linha();
+    }
+  else {
+    float pos = posicao_linha();
       float pid = PID(pos);
       motor(pid);
-    }
+  }
 }
