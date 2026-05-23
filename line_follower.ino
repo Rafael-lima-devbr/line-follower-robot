@@ -66,6 +66,7 @@ float posicao_linha() {
   }  
   if (total > 10) {
       posicao = soma/total;
+      gap = false;
   } else {
     gap = true;
 }
