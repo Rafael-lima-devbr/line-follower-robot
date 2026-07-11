@@ -10,7 +10,7 @@ float sensor_normal[5] = {0,0,0,0,0};
 int sensor_digital[5] = {0,0,0,0,0};
 int pesos[5] = {-2,-1,0,1,2};
 bool gap = false;
-float kp = 130;
+float kp = 40;
 float kd = 2;
 int velocidade_base = 170;
 
@@ -78,8 +78,8 @@ float PID(float posicao){
   static float erroanterior = 0;
   static unsigned long lastime = 0;
   float erro = setpoint-posicao;
-  unsigned long now= millis();
-  float dt = (now-lastime)/1000.0;
+  unsigned long now= micros();
+  float dt = (now-lastime)/1000000.0;
   float derivada = (erro-erroanterior)/dt;
   float saida = kp*erro + kd*derivada;
   erroanterior = erro;
@@ -125,6 +125,7 @@ void digital(){
 
 void controle(){
   digital();
+  float pos = posicao_linha();
   if (sensor_digital[0] + sensor_digital[1] >= 2 && sensor_normal[4] == 0){
         analogWrite(motorD1, 0); analogWrite(motorE1, 200);
         analogWrite(motorD2, 200); analogWrite(motorE2,0);
@@ -149,7 +150,6 @@ void controle(){
       posicao_linha();
     }
   else {
-    float pos = posicao_linha();
       float pid = PID(pos);
       motor(pid);
   }
