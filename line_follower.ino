@@ -51,7 +51,7 @@ void normalizacao() {
   sensor_normal[i] = constrain(map(sensor_bruto[i], sensor_min[i], sensor_max[i], 0, 100), 0, 100);
   //Serial.print(" | ");
   //Serial.print(sensor_normal[i]);
-  //.print(" | ");
+  //Serial.print(" | ");
   }
   //Serial.println();
 }
