@@ -90,10 +90,10 @@ float PID(float posicao){
 void motor(float pid) {
   int velocidade_esquerda = constrain(velocidade_base + pid, -255, 255);
   int velocidade_direita = constrain(velocidade_base - pid, -255, 255);
-  if (velocidade_direita > -120 && velocidade_direita <0) velocidade_direita = -120;
-  if (velocidade_direita <120 && velocidade_direita>0) velocidade_direita = 120;
-  if (velocidade_esquerda> -120 && velocidade_esquerda <0) velocidade_esquerda = -120;
-  if (velocidade_esquerda <120 &&  velocidade_esquerda >0) velocidade_esquerda = 120;
+  if (velocidade_direita > -100 && velocidade_direita <0) velocidade_direita = -100;
+  if (velocidade_direita <100 && velocidade_direita>0) velocidade_direita = 100;
+  if (velocidade_esquerda> -100 && velocidade_esquerda <0) velocidade_esquerda = -100;
+  if (velocidade_esquerda <100 &&  velocidade_esquerda >0) velocidade_esquerda = 100;
   
   if (velocidade_direita >= 0) {
       analogWrite(motorD1, velocidade_direita);
